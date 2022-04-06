@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{DefaultLayout}">
+<head></head>
+
+<section layout:fragment="Content">
+    <div th:replace="DefaultGeneralMessage"></div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="clearfix">
+                <h1 class="panel-title bs-title-panel">Bills Search</h1>
+                <a class="btn btn-link bs-link-panel" href="/bills/new">New bill</a>
+            </div>
+        </div>
+
+        <div class="panel-body">
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th class="text-center col-md-1">#</th>
+                    <th>Description</th>
+                    <th class="text-center col-md-2">Due Date</th>
+                    <th class="text-right col-md-2">Value</th>
+                    <th class="text-center col-md-2">Status</th>
+                    <th class="col-md-1"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bill : ${bills}">
+                    <td class="text-center" th:text="${bill.code}">1</td>
+                    <td th:text="${bill.description}"></td>
+                    <td class="text-center" th:text="${{bill.dueDate}}"></td>
+                    <td class="text-right" th:text="|£ ${bill.value}|"></td>
+                    <td class="text-center" th:attr="data-role=${bill.code}">
+	   						<span class="label" th:text="${bill.status.description}"
+                                  th:classappend="${#strings.toString(bill.status) == 'PENDING' ? 'label-danger' : 'label-success'}"></span>
+                    </td>
+                    <td class="text-center">
+                        <a class="btn btn-link btn-xs" th:href="@{/bills/{code}(code=${bill.code})}"
+                           title="Edit" rel="tooltip" data-placement="top">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a class="btn btn-link btn-xs" data-toggle="modal" data-target="#deleteConfirmationModal"
+                           th:attr="data-code=${bill.code}, data-description=${bill.description}"
+                           title="Remove" rel="tooltip" data-placement="top">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                        <a class="btn btn-link btn-xs js-update-status" th:if="${#strings.toString(bill.status) == 'PENDING'}"
+                           title="Receive" rel="tooltip" data-placement="top"
+                           th:attr="data-code=${bill.code}"
+                           th:href="@{/bills/{code}/receive(code=${bill.code})}">
+                            <span class="glyphicon glyphicon-check"></span>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6" th:if="${#lists.isEmpty(bills)}">There is no registers.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:replace="DeleteConfirmationDialog"></div>
+
+    </div>
+
+</section>
+
+</html>

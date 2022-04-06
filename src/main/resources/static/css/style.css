@@ -1,0 +1,23 @@
+.navbar-brand {
+	padding-top: 10px;
+}
+
+.panel-default {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.alert {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.bs-link-panel {
+	float: right;
+	padding: 0px;
+}
+
+.bs-title-panel {
+	float: left;
+	padding-top: 2px;
+}
