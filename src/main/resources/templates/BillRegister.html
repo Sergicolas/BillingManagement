@@ -7,7 +7,7 @@
 <head></head>
 
 <section layout:fragment="Content">
-    <form class="form-horizontal" method="POST" action="/bills" th:object="${bill}">
+    <form class="form-horizontal" method="POST" th:action="@{/bills}" th:object="${bill}">
         <div th:replace="DefaultGeneralMessage"></div>
         <div th:replace="DefaultErrorMessage"></div>
 
@@ -15,7 +15,7 @@
             <div class="panel-heading">
                 <div class="clearfix">
                     <h1 class="panel-title bs-title-panel">New Bill</h1>
-                    <a class="btn btn-link bs-link-panel" href="/bills">Bills Search</a>
+                    <a class="btn btn-link bs-link-panel" th:href="@{/bills}">Bills Search</a>
                 </div>
             </div>
 
